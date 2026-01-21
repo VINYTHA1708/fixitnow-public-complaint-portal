@@ -1,0 +1,64 @@
+<div class="container mt-4" ng-controller="AdminController">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold">Welcome, {{currentUser.name}}</h3>
+    <button class="btn btn-danger" ng-click="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white fw-bold">
+      <i class="fas fa-tasks me-2"></i>Manage Complaints
+    </div>
+    <div class="card-body">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>User</th>
+            <th>Status</th>
+            <th>Upvotes</th> 
+            <th>Assigned Staff</th>
+            <th>Created At</th>
+            <th>Assign</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="c in complaints | orderBy:'-upvotes'">
+            <td>{{c.id}}</td>
+            <td>{{c.title}}</td>
+            <td>{{c.description}}</td>
+            <td>{{c.category}}</td>
+            <td>{{c.user.name}}</td>
+            <td>
+              <span ng-class="{
+                'text-warning': c.status === 'Pending',
+                'text-primary': c.status === 'Assigned',
+                'text-success': c.status === 'Resolved'
+              }">{{c.status}}</span>
+            </td>
+            <td>
+              <i class="fas fa-thumbs-up text-primary me-1"></i>{{c.upvotes}} 
+            </td>
+            <td>{{c.assignedStaff ? c.assignedStaff.name : 'Not Assigned'}}</td>
+            <td>{{c.createdAt | date:'medium'}}</td>
+            <td>
+              <div class="input-group input-group-sm">
+                <select ng-model="c.selectedStaff"
+                        ng-options="s.id as s.name for s in staffList"
+                        class="form-select">
+                  <option value="">--Select--</option>
+                </select>
+                <button class="btn btn-success"
+                        ng-click="assignComplaint(c.id, c.selectedStaff)">
+                  <i class="fas fa-user-check"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

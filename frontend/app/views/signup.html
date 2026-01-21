@@ -1,0 +1,53 @@
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold text-primary">Choose Your Signup Type</h2>
+    <p class="text-muted">Select your role to continue registration</p>
+  </div>
+
+  <div class="row g-4 text-center justify-content-center">
+
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-4 p-4 h-100 hover-card">
+        <i class="fas fa-users fa-4x text-primary mb-3"></i>
+        <h4 class="fw-bold mb-2">Citizen</h4>
+        <p class="text-muted">Register to report and track local issues.</p>
+        <a href="#!/signup-citizen" class="btn btn-primary w-100 rounded-pill mt-3">
+          <i class="fas fa-user-plus me-2"></i> Sign Up as Citizen
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-4 p-4 h-100 hover-card">
+        <i class="fas fa-hard-hat fa-4x text-warning mb-3"></i>
+        <h4 class="fw-bold mb-2">Staff</h4>
+        <p class="text-muted">Join the team to manage and resolve complaints.</p>
+        <a href="#!/signup-staff" class="btn btn-warning w-100 rounded-pill mt-3 text-white">
+          <i class="fas fa-user-cog me-2"></i> Sign Up as Staff
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 rounded-4 p-4 h-100 hover-card">
+        <i class="fas fa-user-shield fa-4x text-success mb-3"></i>
+        <h4 class="fw-bold mb-2">Admin</h4>
+        <p class="text-muted">Manage system users, staff, and complaints.</p>
+        <a href="#!/signup-admin" class="btn btn-success w-100 rounded-pill mt-3">
+          <i class="fas fa-user-shield me-2"></i> Sign Up as Admin
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .hover-card {
+    transition: all 0.3s ease;
+  }
+  .hover-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+</style>

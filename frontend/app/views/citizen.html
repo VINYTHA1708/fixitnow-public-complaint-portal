@@ -1,0 +1,71 @@
+<div class="container mt-4" ng-controller="ComplaintController">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold">Welcome, {{currentUser.name}}</h3>
+    <button class="btn btn-danger" ng-click="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white fw-bold">
+      <i class="fas fa-edit me-2"></i>Post a New Complaint
+    </div>
+    <div class="card-body">
+      <form ng-submit="addComplaint()">
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input ng-model="newComplaint.title" class="form-control" placeholder="Enter complaint title" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea ng-model="newComplaint.description" class="form-control" rows="3" placeholder="Describe your issue..." required></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Category</label>
+          <select ng-model="newComplaint.category" class="form-select">
+            <option>ELECTRICITY</option>
+            <option>GARBAGE</option>
+            <option>WATER_SUPPLY</option>
+            <option>POTHOLE</option>
+            <option>STREETLIGHT</option>
+            <option>OTHER</option>
+          </select>
+        </div>
+        <button class="btn btn-primary"><i class="fas fa-paper-plane me-2"></i>Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-success text-white fw-bold">
+      <i class="fas fa-user-check me-2"></i>My Complaints
+    </div>
+    <div class="card-body">
+      <div ng-if="myComplaints.length === 0">
+        <p class="text-muted fst-italic">No complaints submitted yet.</p>
+      </div>
+      <div ng-repeat="c in myComplaints" class="border-bottom pb-2 mb-2">
+        <b>{{c.title}}</b>
+        <span class="badge bg-secondary ms-2">{{c.category}}</span> —
+        <span ng-class="{'text-warning': c.status==='Pending', 'text-primary': c.status==='Assigned', 'text-success': c.status==='Resolved'}">{{c.status}}</span><br>
+        <small>Assigned to: <b>{{(c.assignedStaff && c.assignedStaff.name) || 'Not Yet Assigned'}}</b></small><br>
+        <small class="text-muted">📅 Registered on: {{c.createdAt | date:'medium'}}</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-info text-white fw-bold">
+      <i class="fas fa-list me-2"></i>All Complaints
+    </div>
+    <div class="card-body">
+      <div ng-repeat="c in complaints" class="border-bottom pb-2 mb-2">
+        <b>{{c.title}}</b> 
+        <span class="badge bg-secondary">{{c.category}}</span> —
+        <span>{{c.status}}</span>
+        <button class="btn btn-sm btn-outline-primary float-end" ng-click="upvote(c.id)">
+          <i class="fas fa-thumbs-up"></i> {{c.upvotes}}
+        </button><br>
+        <small class="text-muted">📅 Registered on: {{c.createdAt | date:'medium'}}</small>
+      </div>
+    </div>
+  </div>
+</div>

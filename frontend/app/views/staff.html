@@ -1,0 +1,58 @@
+<div class="container mt-4" ng-controller="StaffController">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold">Welcome, {{staff.name}}</h3>
+    <button class="btn btn-danger" ng-click="logout()">
+      <i class="fas fa-sign-out-alt me-2"></i>Logout
+    </button>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white fw-bold">
+      <i class="fas fa-clipboard-list me-2"></i>Assigned Complaints
+    </div>
+    <div class="card-body">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Upvotes</th> 
+            <th>Created At</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="c in assignedComplaints | orderBy:'-upvotes'">
+            <td>{{c.id}}</td>
+            <td>{{c.title}}</td>
+            <td>{{c.description}}</td>
+            <td>{{c.category}}</td>
+            <td>
+              <span ng-class="{
+                'text-warning': c.status==='Pending',
+                'text-primary': c.status==='In Progress',
+                'text-success': c.status==='Resolved'
+              }">{{c.status}}</span>
+            </td>
+            <td>
+              <i class="fas fa-thumbs-up text-primary me-1"></i>{{c.upvotes}}
+            </td> 
+            <td>{{c.createdAt | date:'medium'}}</td>
+            <td>
+              <select ng-model="c.newStatus" class="form-select form-select-sm d-inline-block w-auto">
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+              </select>
+              <button class="btn btn-sm btn-success ms-2" ng-click="updateStatus(c.id, c.newStatus)">
+                <i class="fas fa-check-circle me-1"></i>Update
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

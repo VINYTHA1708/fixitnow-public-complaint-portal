@@ -1,0 +1,41 @@
+<div class="container mt-5" ng-controller="AuthController">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+          <h4>Staff Sign Up</h4>
+        </div>
+        <div class="card-body p-4">
+          <form ng-submit="signup('CITIZEN')">
+            <div class="mb-3">
+              <label>Full Name</label>
+              <input type="text" ng-model="signupData.name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Email</label>
+              <input type="email" ng-model="signupData.email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Password</label>
+              <input type="password" ng-model="signupData.password" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Phone</label>
+              <input type="text" ng-model="signupData.phone" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Address</label>
+              <input type="text" ng-model="signupData.address" class="form-control" required>
+            </div>
+            <div ng-if="signupError" class="alert alert-danger">{{signupError}}</div>
+            <button type="submit" class="btn btn-primary w-100">Register as Staff</button>
+          </form>
+          <hr>
+          <p class="text-center">
+            Already have an account? <a href="#!/login-staff" class="fw-bold text-primary">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

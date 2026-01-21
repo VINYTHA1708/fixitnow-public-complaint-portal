@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FixItNow - Complaint Portal</title>
+  <style>
+    body { font-family: Arial; margin: 20px; background: #f4f4f4; }
+    h1 { color: #333; }
+    input, select, textarea, button { margin: 5px; padding: 8px; }
+    .complaint { background: #fff; padding: 10px; margin: 10px 0; border-radius: 6px; }
+    .status { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>🛠 FixItNow Complaint Portal</h1>
+
+  <h3>Submit a Complaint</h3>
+  <form id="complaintForm">
+    <label>Title:</label><br>
+    <input type="text" id="title" required><br>
+    
+    <label>Description:</label><br>
+    <textarea id="description" rows="3"></textarea><br>
+    
+    <label>Category:</label><br>
+    <select id="category">
+      <option value="GARBAGE">GARBAGE</option>
+      <option value="WATER_SUPPLY">WATER_SUPPLY</option>
+      <option value="STREETLIGHT">STREETLIGHT</option>
+      <option value="POTHOLE">POTHOLE</option>
+      <option value="OTHER">OTHER</option>
+    </select><br>
+    
+    <button type="submit">Submit Complaint</button>
+  </form>
+
+  <hr>
+
+  <h3>Existing Complaints</h3>
+  <div id="complaints"></div>
+
+  <script>
+    const API = "http://localhost:8080/api/complaints";
+
+    // Fetch all complaints
+    async function loadComplaints() {
+      const res = await fetch(API);
+      const data = await res.json();
+      const container = document.getElementById("complaints");
+      container.innerHTML = "";
+      data.forEach(c => {
+        container.innerHTML += `
+          <div class="complaint">
+            <h4>${c.title}</h4>
+            <p>${c.description}</p>
+            <p>Category: ${c.category}</p>
+            <p class="status">Status: ${c.status}</p>
+            <p>Upvotes: ${c.upvotes}</p>
+            <button onclick="upvote(${c.id})">👍 Upvote</button>
+          </div>
+        `;
+      });
+    }
+
+    // Submit new complaint
+    document.getElementById("complaintForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const complaint = {
+        user: { id: 1 },
+        title: document.getElementById("title").value,
+        description: document.getElementById("description").value,
+        category: document.getElementById("category").value
+      };
+      await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(complaint)
+      });
+      loadComplaints();
+      e.target.reset();
+    });
+
+    // Upvote complaint
+    async function upvote(id) {
+      await fetch(`${API}/${id}/upvote`, { method: "PUT" });
+      loadComplaints();
+    }
+
+    loadComplaints();
+  </script>
+</body>
+</html>
